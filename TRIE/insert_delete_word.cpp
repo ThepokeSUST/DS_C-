@@ -70,6 +70,18 @@ private:
         else
             return true;
     }
+    void delete_word(string str, node *root)
+    {
+        if (str.size() == 0)
+        {
+            root->terminate = false;
+            return;
+        }
+        int idx = str[0] - 'a';
+
+        root = root->child[idx];
+        delete_word(str.substr(1), root);
+    }
 
 public:
     void insert(string str)
@@ -80,6 +92,11 @@ public:
     bool find(string str)
     {
         return find_word(str, this->root);
+    }
+
+    void delete_(string str)
+    {
+        delete_word(str, this->root);
     }
 };
 int main()
@@ -98,6 +115,10 @@ int main()
     cout << "enter number of query ";
     int q;
     cin >> q;
+    cout << "delete word ";
+    string s;
+    cin >> s;
+    t.delete_(s);
     while (q--)
     {
         string str;
