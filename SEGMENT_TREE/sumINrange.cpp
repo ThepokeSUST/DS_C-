@@ -48,6 +48,25 @@ private:
 
         return left + right;
     }
+    void update_(int st, int en, int idx, int ele, int cur)
+    {
+        if (st == en)
+        {
+            this->tree[cur] = ele;
+            return;
+        }
+
+        int mid = (st + en) / 2;
+        if (mid >= idx)
+        {
+            update_(st, mid, idx, ele, cur * 2);
+        }
+        else
+        {
+            update_(mid + 1, en, idx, ele, cur * 2 + 1);
+        }
+        this->tree[cur] = this->tree[cur * 2] + this->tree[cur * 2 + 1];
+    }
 
 public:
     void build(vector<int> &vec)
@@ -58,6 +77,10 @@ public:
     int query(int l, int r)
     {
         return query_(l, r, 0, this->size - 1, 1);
+    }
+    void update(int idx, int ele)
+    {
+        update_(0, this->size - 1, idx, ele, 1);
     }
 };
 
@@ -83,4 +106,13 @@ int main()
         cout << s.query(a, b);
         cout << endl;
     }
+
+    int a, ele;
+    cout << "update ";
+    cin >> a >> ele;
+    s.update(a, ele);
+
+    int b, c;
+    cin >> b >> c;
+    cout << s.query(b, c);
 }
