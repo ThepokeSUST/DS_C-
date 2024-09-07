@@ -44,6 +44,52 @@ public:
             }
         }
     }
+
+    void delete_()
+    {
+
+        this->arr[0] = this->arr[this->size - 1];
+        size--;
+        int idx = 0;
+        while (idx < size)
+        {
+            int left = idx * 2 + 1;
+            int right = idx * 2 + 2;
+            if (left <= size and right <= size)
+            {
+                if (arr[idx] < arr[left] and arr[left] >= arr[right])
+                {
+                    swap(arr[idx], arr[left]);
+                    idx = left;
+                }
+                else if (arr[idx] < arr[right] and arr[right] >= arr[left])
+                {
+                    swap(arr[idx], arr[right]);
+                    idx = right;
+                }
+                else
+                    return;
+            }
+            else if (left <= size)
+            {
+                if (arr[idx] < arr[left])
+                {
+                    swap(arr[idx], arr[left]);
+                    idx = left;
+                }
+            }
+            else if (right <= size)
+            {
+                if (arr[idx] < arr[right])
+                {
+                    swap(arr[idx], arr[right]);
+                    idx = right;
+                }
+            }
+            else
+                return;
+        }
+    }
     void display()
     {
         for (int i = 0; i < size; i++)
@@ -63,5 +109,8 @@ int main()
         h.insert(ele);
     }
 
+    h.display();
+    h.delete_();
+    cout << endl;
     h.display();
 }
